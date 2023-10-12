@@ -1,4 +1,4 @@
-import gtfs_static from "../helper/gtfs-static"
+import gtfs_static from "./gtfs-static"
 
 export default {
     async octranspo(stopId) {

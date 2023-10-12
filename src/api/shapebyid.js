@@ -1,6 +1,4 @@
 import * as turf from '@turf/helpers'
-// Using to make lines from cords
-import { DateTime } from "luxon";
 
 import gtfs_static from "../helper/gtfs-static"
 const zone = "America/Toronto"

@@ -3,9 +3,6 @@ main = "src/index.js"
 compatibility_date = "2023-09-18"
 node_compat = true
 
-[triggers]
-crons = ["1 1 1 * *","1 0 1 * *"]
-
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Note: Use secrets to store sensitive data.

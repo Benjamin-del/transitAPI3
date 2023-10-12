@@ -1,13 +1,15 @@
 # BENJA TRANSIT API3
 
-This API combines GTFS Files for OCtranspo that are needed for the working of the Benja Transit App.
+![Last GTFS Update](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FBenjamin-del%2FTransitDB3%2Fmain%2Fupdate.json&query=update&label=Last%20GTFS%20Update&color=red) 
 
-This app only supports the OC TRANSPO API (Found at: https://www.octranspo.com/en/plan-your-trip/travel-tools/developers)
+This API uses GTFS and the wonky OC Transpo API to supply the backend for Benja Transit.
+
+This app supports the OC TRANSPO API (Found at: https://www.octranspo.com/en/plan-your-trip/travel-tools/developers)
 
 Tools Used
-- FTP (Only for upload)
 - OC Transpo API
 - TurfJS (turf/helper)
+- Luxon
 
 ## API
 The following methods are available for use:
@@ -30,31 +32,23 @@ The OC Transpo API dosen't provide information about what trip... This makes it 
 | All above values are required                                |
 
 
-## FTP
-I have a FTP server that has all of the files updated every month (CRON JOB). 
-The project liscense does not cover files uploaded to the FTP server.  If you want to use the FTP server, please open a new issue on github. 
+## Static GTFS
+For OC Transpo, I have deflated some GTFS files, they are available at a seperate Repo (Available at: https://benjamin-del.github.io/TransitDB3). You can use this repo with your worker but I would suggest forking that repo and using your own version.
 
-### Remove FTP
-You are able to delete all of the FTP update file (located at `/update`). If you do that you will also have to remove lines `40-52` in `src/index.js`. You should also remove all files that have a `../helper/gtfs-static` import. You can change that to be `../helper/gtfs-dwldr` so that your app will always download a fresh copy of the GTFS files on each file (!!!). This can slow down the server. 
 
 ## Installation
-This is designed to run on a cloudflare worker. It could be ported over to a express server but that is not supported.
+This is designed to run on a Cloudflare Worker. It could be ported over to a express server or other serverless components but that is not supported.
 
 1. Fork the project and create a `.dev.vars` file in the root directory. I would sugest using wrangler. It should look like this:
 
 
     ```
-    #FTP
-    FTP_PASS="yourpassword"
-    FTP_HOST="yourhost"
-    FTP_PORT=21
-    FTP_USER="yourname"
-
     # OCTRANSPO API
     OCTRANSPO_API_KEY="0000111122223333444"
     OCTRANSPO_APP_ID="1234566"
     ```
     (Fill in the values)
+    
 2. Install Coudlflare Wrangler. You can find the instructions here: https://developers.cloudflare.com/workers/cli-wrangler/install-update
 
 3. Configure your server where you get the GTFS files from. The configuration is found at `src/helper/gtfs-static.js`, line `6`. The current server will not work.

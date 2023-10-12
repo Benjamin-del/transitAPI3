@@ -9,9 +9,6 @@
  */
 
 import oc_rtr from './octranspo-router';
-import oc_static_update from './update/oc_static';
-import oc_time_update from './update/oc_times';
-import oc_trips_udt from './update/oc_trips';
 import home from './html/home.html';
 // Export a default object containing event handlers
 export default {
@@ -46,8 +43,11 @@ export default {
 
 			return collectJSONResponse({status:200}, 200);
 		} else if (url.pathname === '/update/oc_codn' ) {
-			await oc_time_update.fetch(env)
+			//await oc_time_update.fetch(env)
 			await oc_trips_udt.fetch(env)
+			return collectJSONResponse({status:200}, 200);
+		} else if (url.pathname === '/update/oc_times' ) {
+			await oc_time_update.fetch(env)
 			return collectJSONResponse({status:200}, 200);
 		}
 		return new Response(
@@ -55,23 +55,4 @@ export default {
 			{ headers: { 'Content-Type': 'text/html' } }
 		);
 	},
-	async scheduled(event, env, ctx) {
-		// Write code for updating your API
-		switch (event.cron) {
-		  // You can set up to three schedules maximum.
-		  case "1 0 1 * *":
-			// Update Condensed API at 12:01 AM on the first day of the month
-			await oc_time_update.fetch(env)
-			await oc_trips_udt.fetch(env)
-			break;
-		  case "1 1 1 * *":
-			// Update Other files at 1:01 AM on the first day of the month 
-			await oc_static_update.fetch(env,"calendar.txt")
-			await oc_static_update.fetch(env,"routes.txt")
-			await oc_static_update.fetch(env,"shapes.txt")
-			await oc_static_update.fetch(env,"stops.txt")
-			break;
-		}
-		console.log("cron processed");
-	  },
-	};
+}

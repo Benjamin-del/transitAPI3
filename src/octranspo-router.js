@@ -1,9 +1,9 @@
 import { Router } from 'itty-router';
-import stoplist from './oc-rtr/list';
-import realtime from './oc-rtr/realtime';
-import shape from './oc-rtr/shape';
-import schedule from './oc-rtr/schedule';
-import shapebyid from './oc-rtr/shapebyid';
+import stoplist from './api/list';
+import realtime from './api/realtime';
+import shape from './api/shape';
+import schedule from './api/schedule';
+import shapebyid from './api/shapebyid';
 
 // now let's create a router (note the lack of "new")
 const router = Router();
