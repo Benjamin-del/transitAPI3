@@ -13,12 +13,21 @@ Tools Used
 
 ## API
 The following methods are available for use:
- - `GET /oct/allstops` - Returns all stops in the OC Transpo GTFS File (@ FTP SERVER)
- - `GET /oct/realtime` - Data from OC Transpo's Realtime API, Provided in JSON format
- - `GET oct/shape` - Using data from the GTFS File, this returns the shape of the route (WITHOUT TRIP ID, See below for full documentation)
- - `GET oct/schedule` - A Static Schedule for a specific Stop ID
- - `GET oct/config` - Theme Information for the OC Transpo API
- - `GET oct/shapebyid` - Get the shape of the route using the shape ID
+ - `GET /api/allstops` - Returns all stops in the OC Transpo GTFS File (@ FTP SERVER)
+ - `GET /api/realtime` - Data from OC Transpo's Realtime API, Provided in JSON format
+ - `GET api/shape` - Using data from the GTFS File, this returns the shape of the route (WITHOUT TRIP ID, See below for full documentation)
+ - `GET api/schedule` - A Static Schedule for a specific Stop ID
+ - `GET api/config` - Theme Information for the OC Transpo API
+ - `GET api/shapebyid` - Get the shape of the route using the shape ID
+
+## GTFS API
+This acts as a midleware for the GTFS server. All it does is return it. The following methods are available for use:
+ - `GET gtfs/trips.txt` - Returns the entire stop_times.txt GTFS file
+ - `GET gtfs/stop_times.txt` - Returns the entire stops.txt GTFS file
+ - `GET gtfs/calendar.txt` - Returns the entire calendar.txt GTFS file
+ - `GET gtfs/routes.txt` - Returns the entire routes.txt GTFS file
+ - `GET gtfs/shapes.txt` - Returns the entire shapes.txt GTFS file
+ - `GET gtfs/stops.txt` - Returns the entire stops.txt GTFS file
 
 ### OCT/SHAPE
 
@@ -56,6 +65,14 @@ This is designed to run on a Cloudflare Worker. It could be ported over to a exp
 4. run `npm run start` to test the server locally. The server will usually run at `http://localhost:8787`.
 
 5. run `npm run deploy` to deploy the server to cloudflare. The server is ready at  `https://yourpoject.yourname.workers.dev`.
+
+### Configuration
+The file `./config.json` contains the configuration for the server. The following options are available:
+
+| Option            | Description                   | Example                                                                       |
+| ----------------- | ----------------------------- | ----------------------------------------------------------------------------- |
+| `GTFS_SVR`        | The URL to the GTFS Server    | `https://benjamin-del.github.io/TransitDB3`                                   |
+| `ACC_FILES`       | The files to accept (Array)   | `['stops.txt', 'stop_times.txt', 'calendar.txt', 'routes.txt', 'shapes.txt']` |
 
 ## Contributing
 If you want to contribute to this project, please open a new issue on github.

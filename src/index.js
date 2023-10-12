@@ -8,7 +8,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import octranspo_router from './octranspo-router';
+import octranspo_router from './dynamic-router';
 import gtfs_router from "./gtfs-router"
 import home from './html/home.html';
 // Export a default object containing event handlers
@@ -32,7 +32,7 @@ export default {
 		}
 		console.log("URL", url.pathname)
 		// OCTRANSPO has a dedicated router.
-		if (url.pathname.startsWith('/oct/')) {
+		if (url.pathname.startsWith('/api/')) {
 			// OCTRANSPO Routes, Separate Router
 			return octranspo_router.handle(request,env,ctx);
 		} else if (url.pathname.startsWith('/gtfs/')) {

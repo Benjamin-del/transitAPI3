@@ -21,31 +21,31 @@ function collectJSONResponse(res, code) {
 }
 
 // All of the stops in the city!
-router.get('/oct/allstops', async () => {
+router.get('/api/allstops', async () => {
 	const stlst = await stoplist.fetch()
 	return collectJSONResponse(stlst.res,stlst.code)
 });
 // Get a specific stop (GTFS code)
-router.get("/oct/realtime", async (request) => {
+router.get("/api/realtime", async (request) => {
 	const ftch = await realtime.fetch(request.query);
 	return collectJSONResponse(ftch.res, ftch.code)
 })
 // Get a specific shape)
 // OCTRANSPO API dosen't tell me what trip ID the bus is on so you have to use start time, route# and directionId (1,0)
-router.get("/oct/shape", async (request) => {
+router.get("/api/shape", async (request) => {
 	const ftch = await shape.fetch(request.query);
 	return collectJSONResponse(ftch.res, ftch.code)
 })
 // Get Static Stop Schedule
-router.get("/oct/schedule", async (request) => {
+router.get("/api/schedule", async (request) => {
 	const ftch = await schedule.fetch(request.query);
 	return collectJSONResponse(ftch.res, ftch.code)
 })
-router.get("/oct/shapebyid", async (request) => {
+router.get("/api/shapebyid", async (request) => {
 	const ftch = await shapebyid.fetch(request.query);
 	return collectJSONResponse(ftch.res, ftch.code)
 })
-router.get("/oct/config", () => {
+router.get("/api/config", () => {
 	const config = {
 		theme: {
 			primary: "#ED1B2E",
