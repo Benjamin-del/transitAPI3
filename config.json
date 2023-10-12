@@ -1,3 +1,4 @@
 {
-    "GTFS_SVR":"https://benjamin-del.github.io/TransitDB3/gtfs/"
+    "GTFS_SVR":"https://benjamin-del.github.io/TransitDB3/gtfs/",
+    "ACC_FILES":["trips.txt","stop_times.txt","calendar.txt","routes.txt","shapes.txt","stops.txt"]
 }

@@ -8,7 +8,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import oc_rtr from './octranspo-router';
+import octranspo_router from './octranspo-router';
+import gtfs_router from "./gtfs-router"
 import home from './html/home.html';
 // Export a default object containing event handlers
 export default {
@@ -33,22 +34,9 @@ export default {
 		// OCTRANSPO has a dedicated router.
 		if (url.pathname.startsWith('/oct/')) {
 			// OCTRANSPO Routes, Separate Router
-			return oc_rtr.handle(request,env,ctx);
-		} else if (url.pathname === '/update/oc_static' ) {
-			
-			await oc_static_update.fetch(env,"calendar.txt")
-			await oc_static_update.fetch(env,"routes.txt")
-			await oc_static_update.fetch(env,"shapes.txt")
-			await oc_static_update.fetch(env,"stops.txt")
-
-			return collectJSONResponse({status:200}, 200);
-		} else if (url.pathname === '/update/oc_codn' ) {
-			//await oc_time_update.fetch(env)
-			await oc_trips_udt.fetch(env)
-			return collectJSONResponse({status:200}, 200);
-		} else if (url.pathname === '/update/oc_times' ) {
-			await oc_time_update.fetch(env)
-			return collectJSONResponse({status:200}, 200);
+			return octranspo_router.handle(request,env,ctx);
+		} else if (url.pathname.startsWith('/gtfs/')) {
+			return gtfs_router.handle(request,env,ctx);
 		}
 		return new Response(
 			home,
