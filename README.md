@@ -11,26 +11,50 @@ Tools Used
 - TurfJS (turf/helper)
 - Luxon
 
-## API
-The following methods are available for use:
- - `GET /api/allstops` - Returns all stops in the OC Transpo GTFS File (@ FTP SERVER)
- - `GET /api/realtime` - Data from OC Transpo's Realtime API, Provided in JSON format
- - `GET api/shape` - Using data from the GTFS File, this returns the shape of the route (WITHOUT TRIP ID, See below for full documentation)
- - `GET api/schedule` - A Static Schedule for a specific Stop ID
+# API
+This program has some API routes that can be used. The following routes are available:
+
+## All Stops
+`GET /api/allstops` - Returns all stops in the OC Transpo GTFS File
+
+Returns:
+```
+GEOJSON FeatureCollection
+```
+## Realtime Data
+`GET /api/realtime` - Data from OC Transpo's Realtime API, Provided in GEOJSON format
+
+| Paramater     | Description              | Example           |
+| ------------- | -------------------------| ----------------- |
+| `stop`        | The Stop ID              | `NA901`           |
+
+Returns: 
+```
+{
+    time: JSON, 
+    gps: GEOJSON FeatureCollection 
+}
+```
+
+## Shape
+`GET api/shape` - Using data from the GTFS File, this returns the shape of the route
+
+| Paramater     | Description              | Example           |
+| ------------- | -------------------------| ----------------- |
+| `id`          | Shape ID                 | `162736`          |
+
+Returns:
+```
+GEOJSON FeatureCollection
+```
+## Configuration 
+
  - `GET api/config` - Theme Information for the OC Transpo API
- - `GET api/shapebyid` - Get the shape of the route using the shape ID
+Returns: `JSON` 
 
-## GTFS API
-This acts as a midleware for the GTFS server. All it does is return it. The following methods are available for use:
- - `GET gtfs/trips.txt` - Returns the entire stop_times.txt GTFS file
- - `GET gtfs/stop_times.txt` - Returns the entire stops.txt GTFS file
- - `GET gtfs/calendar.txt` - Returns the entire calendar.txt GTFS file
- - `GET gtfs/routes.txt` - Returns the entire routes.txt GTFS file
- - `GET gtfs/shapes.txt` - Returns the entire shapes.txt GTFS file
- - `GET gtfs/stops.txt` - Returns the entire stops.txt GTFS file
-
-### OCT/SHAPE
-
+## Context
+ - `GET api/context` - Get the GTFS data for a trip using search paramaters 
+ 
 The OC Transpo API dosen't provide information about what trip... This makes it hard to figure out what shape it is currently running. Since routes have different brances (Stitsville / Tunneys Pasture) The shape is different. Using the following paramaters the server is able to figure out what shape it is running. There may be multiple that match the query so it returns as an array.
 
 | Paramater     | Description              | Example           |
@@ -39,6 +63,18 @@ The OC Transpo API dosen't provide information about what trip... This makes it 
 | `direction`   | The Direction            | `0`               | 
 | `startTime`   | The Start Time (HH:MM)   | `15:03`           |
 | All above values are required                                |
+
+
+
+# GTFS API
+This acts as a midleware for the GTFS server. All it does is return it. The following methods are available for use:
+ - `GET gtfs/trips.txt` - Returns the entire stop_times.txt GTFS file
+ - `GET gtfs/stop_times.txt` - Returns the entire stops.txt GTFS file
+ - `GET gtfs/calendar.txt` - Returns the entire calendar.txt GTFS file
+ - `GET gtfs/routes.txt` - Returns the entire routes.txt GTFS file
+ - `GET gtfs/shapes.txt` - Returns the entire shapes.txt GTFS file
+ - `GET gtfs/stops.txt` - Returns the entire stops.txt GTFS file
+
 
 
 ## Static GTFS

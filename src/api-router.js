@@ -1,9 +1,8 @@
 import { Router } from 'itty-router';
 import stoplist from './api/list';
 import realtime from './api/realtime';
-import shape from './api/shape';
-import schedule from './api/schedule';
-import shapebyid from './api/shapebyid';
+import context from './api/context';
+import shapebyid from './api/shape';
 
 // now let's create a router (note the lack of "new")
 const router = Router();
@@ -32,16 +31,12 @@ router.get("/api/realtime", async (request) => {
 })
 // Get a specific shape)
 // OCTRANSPO API dosen't tell me what trip ID the bus is on so you have to use start time, route# and directionId (1,0)
-router.get("/api/shape", async (request) => {
-	const ftch = await shape.fetch(request.query);
+router.get("/api/context", async (request) => {
+	const ftch = await context.fetch(request.query);
 	return collectJSONResponse(ftch.res, ftch.code)
 })
 // Get Static Stop Schedule
-router.get("/api/schedule", async (request) => {
-	const ftch = await schedule.fetch(request.query);
-	return collectJSONResponse(ftch.res, ftch.code)
-})
-router.get("/api/shapebyid", async (request) => {
+router.get("/api/shape", async (request) => {
 	const ftch = await shapebyid.fetch(request.query);
 	return collectJSONResponse(ftch.res, ftch.code)
 })
